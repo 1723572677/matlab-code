@@ -1,0 +1,893 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>roughnessfinal</title><meta name="generator" content="MATLAB 9.3"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-05-15"><meta name="DC.source" content="roughnessfinal.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">&#36755;&#20837;&#22270;&#29255; &#23558;&#24425;&#33394;&#22270;&#29255;&#36716;&#20026;&#28784;&#24230;&#22270;&#29255;</a></li><li><a href="#3">&#25163;&#21160;&#65281;&#65281;&#65281;&#65281;&#30830;&#23450;&#22278;&#24515;&#20301;&#32622;&#21450;&#21322;&#24452;&#22823;&#23567;</a></li><li><a href="#4">&#23547;&#25214;&#23396;&#31435;&#30340;&#31890;&#23376; &#19981;&#21487;&#22312;&#22270;&#20687;&#36793;&#32536;</a></li><li><a href="#5">&#21028;&#26029;&#23396;&#31435;&#31890;&#23376;&#26159;&#21542;&#22312;&#30028;&#38754;&#19978; &#35745;&#31639;&#30028;&#38754;&#21644;&#31890;&#23376;&#30340;&#20999;&#35282;</a></li></ul></div><pre class="codeinput">clear
+clc
+</pre><h2 id="2">&#36755;&#20837;&#22270;&#29255; &#23558;&#24425;&#33394;&#22270;&#29255;&#36716;&#20026;&#28784;&#24230;&#22270;&#29255;</h2><pre class="codeinput">coefficient=1.5; <span class="comment">%&#21518;&#32493;&#26816;&#32034;&#20301;&#32622;&#20026;&#31890;&#23376;&#22278;&#24515;&#36317;&#31163;coefficient*radii&#30340;&#19968;&#22280;&#25968;&#25454;&#65288;w_pic&#65289;</span>
+gray_image=rgb2gray(imread([<span class="string">'roughness\'</span>, <span class="string">'5 pmma san PMMA ATRPPMMA 5WT% 180 180min_03'</span>,<span class="string">'.tif'</span>]));
+figure; imshow(gray_image);
+<span class="comment">%w_p=imfilter(double(gray_image),fspecial('gaussian'));figure; imshow(uint8(w_p));%&#39640;&#26031;&#28388;&#27874;&#22120;</span>
+w_pic=medfilt2(double(gray_image),[7 7]);<span class="comment">%&#20013;&#20540;&#24179;&#28369;&#28388;&#27874;&#22120;;          figure; imshow(uint8(w_pic));%&#24179;&#28369;&#28388;&#27874;&#22120;</span>
+<span class="comment">% w_pic=imfilter(double(gray_image),ones(9))/81</span>
+</pre><pre class="codeoutput">&#35686;&#21578;: &#22270;&#20687;&#22826;&#22823;&#65292;&#26080;&#27861;&#22312;&#23631;&#24149;&#19978;&#26174;&#31034;&#65307;&#23558;&#20197; 50% &#26174;&#31034; 
+</pre><img vspace="5" hspace="5" src="roughnessfinal_01.png" alt=""> <h2 id="3">&#25163;&#21160;&#65281;&#65281;&#65281;&#65281;&#30830;&#23450;&#22278;&#24515;&#20301;&#32622;&#21450;&#21322;&#24452;&#22823;&#23567;</h2><pre class="codeinput"><span class="comment">%d = imdistline; % &#35813;&#30452;&#24452;&#22823;&#27010;&#22312;30&#21040;45&#20687;&#32032;&#20043;&#38388;,&#21017;&#21322;&#24452;&#20026;15&#21040;22.5</span>
+<span class="comment">%delete(d)</span>
+<span class="comment">%&#32972;&#26223;&#30456;&#24403;&#20142;&#65292;&#22823;&#22810;&#25968;&#22609;&#26009;&#29255;&#27604;&#32972;&#26223;&#26263;&#12290;&#20294;&#26159;&#65292;&#40664;&#35748;&#24773;&#20917;&#19979;&#65292;imfindcircles &#20250;&#25214;&#21040;&#27604;&#32972;&#26223;&#20142;&#30340;&#22278;&#24418;&#23545;&#35937;&#12290;</span>
+<span class="comment">%&#22240;&#27492;&#65292;&#22312; imfindcircles &#20013;&#23558;&#21442;&#25968; 'ObjectPolarity' &#35774;&#32622;&#20026; 'dark' &#20197;&#25628;&#32034;&#36739;&#26263;&#30340;&#22278;&#12290;</span>
+[centers,radii] = imfindcircles(gray_image,[15 30],<span class="string">'ObjectPolarity'</span>,<span class="string">'dark'</span>,<span class="string">'Sensitivity'</span>,0.95);
+viscircles(centers,radii,<span class="string">'LineWidth'</span>,1); <span class="comment">%&#21487;&#35270;&#21270;&#23567;&#29699;</span>
+</pre><img vspace="5" hspace="5" src="roughnessfinal_02.png" alt=""> <h2 id="4">&#23547;&#25214;&#23396;&#31435;&#30340;&#31890;&#23376; &#19981;&#21487;&#22312;&#22270;&#20687;&#36793;&#32536;</h2><pre class="codeinput"><span class="comment">%&#20004;&#20010;&#31890;&#23376;&#22278;&#24515;&#38388;&#36317;&#22823;&#20110;coefficient*(radii(j)+radii(i))&#20687;&#32032;&#23601;&#21487;&#20197;&#21028;&#26029;&#20026;&#38750;&#36830;&#25509;&#21333;&#20803;  %&#22278;&#24515;&#36317;&#31163;&#36793;&#32536;coefficient*radii(j)+4&#20197;&#20869;&#23601;&#19981;&#34892;</span>
+circle=ones(length(centers),1);<span class="comment">%&#30097;&#32618;&#20174;&#26080;&#65292;&#40664;&#35748;&#31532;j&#20010;&#28857;&#26159;&#23396;&#31435;&#30340;,&#27599;&#20010;&#28857;&#37117;&#26159;&#23396;&#31435;&#30340;</span>
+<span class="keyword">for</span> j=1:length(centers)
+    <span class="keyword">if</span> circle(j)==0
+        <span class="keyword">continue</span>
+    <span class="keyword">end</span>
+    <span class="keyword">if</span>  abs(centers(j,1)-size(w_pic,2)/2)&gt;(size(w_pic,2)/2-(coefficient*radii(j)+4)) || abs(centers(j,2)-size(w_pic,1)/2)&gt;(size(w_pic,1)/2-(coefficient*radii(j)+4))
+        circle(j)=0; <span class="comment">%&#31532;j&#20010;&#28857;&#22312;&#22270;&#20687;&#36793;&#32536;</span>
+        <span class="keyword">continue</span>
+    <span class="keyword">end</span>
+    <span class="keyword">for</span> i=1:length(centers)
+        <span class="comment">%  h = viscircles(centers(1,:),radii(1)); %&#21487;&#35270;&#21270;&#23567;&#29699;</span>
+        <span class="keyword">if</span> j==i
+            <span class="keyword">continue</span>
+        <span class="keyword">end</span>
+
+        <span class="keyword">if</span> ( (centers(j,1)-centers(i,1))^2+(centers(j,2)-centers(i,2))^2  )&lt;( coefficient*(radii(i)+radii(j)))^2
+            circle(j)=0; <span class="comment">%&#31532;j&#20010;&#28857;&#19981;&#26159;&#23396;&#31435;&#30340;</span>
+            circle(i)=0; <span class="comment">%&#31532;i&#20010;&#28857;&#19981;&#26159;&#23396;&#31435;&#30340;</span>
+            <span class="keyword">break</span>
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+
+<span class="keyword">end</span>
+lonelycenters=centers.*circle; <span class="comment">%circle&#20026;0&#21017;&#19981;&#28385;&#36275;&#23396;&#31435;&#19988;&#19981;&#21487;&#22312;&#22270;&#20687;&#36793;&#32536;&#35201;&#27714;&#65292;&#20026;1&#21017;&#28385;&#36275;&#19978;&#36848;&#35201;&#27714;&#65292;&#35753;&#19981;&#28385;&#36275;&#35201;&#27714;&#30340;&#21322;&#24452;&#22278;&#24515;&#25968;&#25454;&#24402;&#38646;</span>
+lonelyradii=radii.*circle;
+lonelycenters(all(lonelycenters==0,2),:)=[];<span class="comment">%&#21435;&#38500;&#20026;&#38646;&#30340;&#34892;&#65292;2&#25351;&#20195;&#34892;</span>
+lonelyradii(all(lonelyradii==0,2),:)=[];<span class="comment">%&#21435;&#38500;&#20026;&#38646;&#30340;&#34892;&#65292;2&#25351;&#20195;&#34892;</span>
+viscircles(lonelycenters,lonelyradii,<span class="string">'Color'</span>,<span class="string">'b'</span>); <span class="comment">%&#21487;&#35270;&#21270;&#23396;&#31435;&#23567;&#29699;&#20026;&#34013;&#33394;</span>
+clear <span class="string">i</span> <span class="string">j</span> <span class="string">circle</span> <span class="string">centers</span> <span class="string">radii</span> <span class="string">gray_image</span>;
+</pre><img vspace="5" hspace="5" src="roughnessfinal_03.png" alt=""> <h2 id="5">&#21028;&#26029;&#23396;&#31435;&#31890;&#23376;&#26159;&#21542;&#22312;&#30028;&#38754;&#19978; &#35745;&#31639;&#30028;&#38754;&#21644;&#31890;&#23376;&#30340;&#20999;&#35282;</h2><pre class="codeinput">halfangle_array=zeros(1, length(lonelyradii))'; <span class="comment">%cos(halfangle)&#23601;&#26159;&#25991;&#29486;&#20013;&#30340;&#28024;&#28070;&#31995;&#25968;&#65292;halfangle*2&#23601;&#26159;&#22312;&#40657;&#30456;&#20013;&#30340;&#31890;&#23376;&#36793;&#32536;&#24635;&#24359;&#24230;&#22823;&#23567;</span>
+max_min=zeros(1, length(lonelyradii))';
+x1=zeros(1, length(lonelyradii))';y1=zeros(1, length(lonelyradii))';x2=zeros(1, length(lonelyradii))';y2=zeros(1, length(lonelyradii))';
+<span class="keyword">for</span> i=1:length(lonelyradii)
+x_circle=lonelycenters(i,1); y_circle=lonelycenters(i,2); r=lonelyradii(i); R=coefficient*r; bangle=(1:100)'*2*pi/100;
+<span class="comment">%position=[x_circle+R*cos(angle) y_circle+R*sin(angle)];</span>
+onedimen_position=(round(x_circle+R*cos(bangle))-1)*size(w_pic,1)+round(y_circle+R*sin(bangle));
+bgray_circle=w_pic(onedimen_position);
+<span class="comment">% plot(bangle, bgray_circle)</span>
+<span class="comment">% gray_circleclear=gray_image(onedimen_position); %&#36825;&#26159;&#27809;&#26377;&#36827;&#34892;&#24179;&#28369;&#22788;&#29702;&#30340;&#25968;&#25454; &#29992;&#20110;&#35843;&#35797;</span>
+<span class="comment">% figure;plot(angle, gray_circleclear)</span>
+threeele = @(a,x) a(1)+a(2)*cos(x)+a(3)*sin(x)+a(4)*cos(2*x)+a(5)*sin(2*x)+a(6)*cos(3*x)+a(7)*sin(3*x)+a(8)*cos(4*x)+a(9)*sin(4*x)+a(10)*cos(5*x)+a(11)*sin(5*x)+a(12)*cos(6*x)+a(13)*sin(6*x);
+a0=ones(1,13);
+a = lsqcurvefit(threeele,a0,bangle,bgray_circle);
+<span class="comment">% times = linspace(bangle(1),bangle(end));figure;plot(bangle,bgray_circle,'ko',times,threeele(a,times),'b-') %&#35843;&#35797;&#29992;</span>
+<span class="comment">% legend('Data','Fourier Fitting')</span>
+<span class="comment">% title('Data and Fitted Curve')</span>
+<span class="comment">% fitfly=threeele(a,bangle);</span>
+fit_data=threeele(a,bangle);
+max_min(i)=max(fit_data)-min(fit_data);
+difffit=diff(fit_data);
+[speedmax,max_positon]=max(difffit);
+[speedmin,min_positon]=min(difffit);
+
+result_angle=[max_positon/50*pi min_positon/50*pi];
+<span class="keyword">if</span> min_positon&lt;max_positon
+    pre_dark_angle=max_positon/50*pi-min_positon/50*pi;
+<span class="keyword">else</span>
+    pre_dark_angle=max_positon/50*pi-min_positon/50*pi+2*pi;
+<span class="keyword">end</span>
+<span class="comment">%result_angle&#23601;&#26159;&#20999;&#35282;&#65292;&#22312;&#22270;&#20013;&#35201;&#26631;&#27880;&#20986;&#26469;</span>
+syms <span class="string">x</span> <span class="string">y</span>
+eq1 = (y-R*sin(result_angle(1)))*(R*cos(result_angle(2))-R*cos(result_angle(1)))-(R*sin(result_angle(2))-R*sin(result_angle(1)))*(x-R*cos(result_angle(1)));
+eq2 = x^2 + y^2 -r^2;
+A = solve(eq1,eq2,x,y);
+x1(i)=x_circle+double(A.x(1));x2(i)=x_circle+double(A.x(2));y1(i)=y_circle+double(A.y(1));y2(i)=y_circle+double(A.y(2));
+
+<span class="keyword">if</span> isreal(double(A.x)) &amp;&amp; isreal(double(A.y)) <span class="comment">%&#30028;&#38754;&#30452;&#32447;&#26041;&#31243;&#19982;&#22278;&#26041;&#31243;&#32852;&#31435;&#26377;&#23454;&#25968;&#35299;</span>
+    halfangle=0.5*acos(1-((double(A.x(1))-double(A.x(2)))^2+(double(A.y(1))-double(A.y(2)))^2)/2/r/r);<span class="comment">%&#20313;&#24358;&#23450;&#29702;</span>
+
+    <span class="keyword">if</span> pre_dark_angle&gt;pi
+        halfangle=pi-halfangle;
+    <span class="keyword">end</span>
+
+    halfangle_array(i)=halfangle;
+<span class="keyword">else</span>
+
+    <span class="keyword">continue</span>
+<span class="keyword">end</span>
+<span class="keyword">end</span>
+halfangle_array=halfangle_array*180/pi;
+
+if_interface=0.5*mean(max_min)&lt;max_min &amp; 1.5*mean(max_min)&gt;max_min;<span class="comment">%&#26159;&#21542;max_min&#20540;&#27604;&#36739;&#27491;&#24120;&#65292;&#25110;&#32773;&#35828;&#31890;&#23376;&#26159;&#21542;&#22312;&#30028;&#38754;&#19978;</span>
+if_realsolve=halfangle_array~=0;<span class="comment">%&#26159;&#21542;&#30452;&#32447;&#21644;&#22278;&#21608;&#26377;&#23454;&#25968;&#35299;</span>
+
+halfangle_array=halfangle_array.*if_realsolve.*if_interface; halfangle_array(halfangle_array==0)=[];
+x1=x1.*if_realsolve.*if_interface;x2=x2.*if_realsolve.*if_interface;y1=y1.*if_realsolve.*if_interface;y2=y2.*if_realsolve.*if_interface;
+x1(x1==0)=[];x2(x2==0)=[];y1(y1==0)=[];y2(y2==0)=[];
+lonelycenters=lonelycenters.*if_realsolve.*if_interface; lonelycenters(all(lonelycenters==0,2),:)=[];<span class="comment">%&#21435;&#38500;&#20026;&#38646;&#30340;&#34892;&#65292;2&#25351;&#20195;&#34892;</span>
+lonelyradii=lonelyradii.*if_realsolve.*if_interface; lonelyradii(lonelyradii==0)=[];
+viscircles(lonelycenters,lonelyradii,<span class="string">'Color'</span>,<span class="string">'g'</span>); <span class="comment">%&#21487;&#35270;&#21270;&#23396;&#31435;&#23567;&#29699;&#20026;green&#33394;</span>
+
+hold <span class="string">on</span>;  <span class="comment">%&#20809;plot&#26159;&#19981;&#34892;&#30340;&#65292;&#24517;&#39035;&#35201;&#26377;&#36825;&#21477;&#65292;&#25165;&#33021;&#23454;&#29616;&#22312; &#21407;&#22270; &#26631;&#35760;&#28857;&#36825;&#19968;&#30446;&#26631;</span>
+
+plot([x1,x2], [y1,y2],<span class="string">'X'</span>,<span class="string">'Color'</span>,<span class="string">'r'</span>,<span class="string">'LineWidth'</span>,2);
+hold <span class="string">off</span>;
+set (gca,<span class="string">'Position'</span>,[0 0 1 1]);
+<span class="comment">%print(gcf,'Test.jpg', '-djpeg', '-r300');</span>
+
+
+saveas(gcf,<span class="string">'filename'</span>,<span class="string">'tiff'</span>);
+mean(halfangle_array) <span class="comment">%82.4514+_35.2419</span>
+std(halfangle_array)
+
+<span class="comment">%&#26368;&#21518;&#35762;&#25152;&#26377;&#30340;contact_angle&#27714;&#24179;&#22343;&#65292;&#20877;&#27714;&#32479;&#35745;&#24847;&#20041;&#19978;&#30340;cos(contact_angle)&#20540;</span>
+</pre><pre class="codeoutput">
+Local minimum possible.
+
+lsqcurvefit stopped because the size of the current step is less than
+the default value of the step size tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the size of the current step is less than
+the default value of the step size tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the size of the current step is less than
+the default value of the step size tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the size of the current step is less than
+the default value of the step size tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the size of the current step is less than
+the default value of the step size tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the size of the current step is less than
+the default value of the step size tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the size of the current step is less than
+the default value of the step size tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the size of the current step is less than
+the default value of the step size tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the size of the current step is less than
+the default value of the step size tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the size of the current step is less than
+the default value of the step size tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the size of the current step is less than
+the default value of the step size tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the size of the current step is less than
+the default value of the step size tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the size of the current step is less than
+the default value of the step size tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the size of the current step is less than
+the default value of the step size tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the size of the current step is less than
+the default value of the step size tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the size of the current step is less than
+the default value of the step size tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the size of the current step is less than
+the default value of the step size tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the size of the current step is less than
+the default value of the step size tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the size of the current step is less than
+the default value of the step size tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the size of the current step is less than
+the default value of the step size tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the size of the current step is less than
+the default value of the step size tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the final change in the sum of squares relative to 
+its initial value is less than the default value of the function tolerance.
+
+
+
+
+Local minimum possible.
+
+lsqcurvefit stopped because the size of the current step is less than
+the default value of the step size tolerance.
+
+
+
+
+ans =
+
+   82.4514
+
+
+ans =
+
+   35.2419
+
+</pre><img vspace="5" hspace="5" src="roughnessfinal_04.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+clear
+clc
+%% 输入图片 将彩色图片转为灰度图片
+coefficient=1.5; %后续检索位置为粒子圆心距离coefficient*radii的一圈数据（w_pic）
+gray_image=rgb2gray(imread(['roughness\', '5 pmma san PMMA ATRPPMMA 5WT% 180 180min_03','.tif']));
+figure; imshow(gray_image); 
+%w_p=imfilter(double(gray_image),fspecial('gaussian'));figure; imshow(uint8(w_p));%高斯滤波器
+w_pic=medfilt2(double(gray_image),[7 7]);%中值平滑滤波器;          figure; imshow(uint8(w_pic));%平滑滤波器
+% w_pic=imfilter(double(gray_image),ones(9))/81
+%% 手动！！！！确定圆心位置及半径大小
+%d = imdistline; % 该直径大概在30到45像素之间,则半径为15到22.5
+%delete(d)
+%背景相当亮，大多数塑料片比背景暗。但是，默认情况下，imfindcircles 会找到比背景亮的圆形对象。
+%因此，在 imfindcircles 中将参数 'ObjectPolarity' 设置为 'dark' 以搜索较暗的圆。
+[centers,radii] = imfindcircles(gray_image,[15 30],'ObjectPolarity','dark','Sensitivity',0.95);
+viscircles(centers,radii,'LineWidth',1); %可视化小球
+%% 寻找孤立的粒子 不可在图像边缘
+%两个粒子圆心间距大于coefficient*(radii(j)+radii(i))像素就可以判断为非连接单元  %圆心距离边缘coefficient*radii(j)+4以内就不行
+circle=ones(length(centers),1);%疑罪从无，默认第j个点是孤立的,每个点都是孤立的
+for j=1:length(centers)
+    if circle(j)==0
+        continue
+    end
+    if  abs(centers(j,1)-size(w_pic,2)/2)>(size(w_pic,2)/2-(coefficient*radii(j)+4)) || abs(centers(j,2)-size(w_pic,1)/2)>(size(w_pic,1)/2-(coefficient*radii(j)+4))
+        circle(j)=0; %第j个点在图像边缘
+        continue
+    end
+    for i=1:length(centers)
+        %  h = viscircles(centers(1,:),radii(1)); %可视化小球
+        if j==i
+            continue
+        end
+        
+        if ( (centers(j,1)-centers(i,1))^2+(centers(j,2)-centers(i,2))^2  )<( coefficient*(radii(i)+radii(j)))^2
+            circle(j)=0; %第j个点不是孤立的
+            circle(i)=0; %第i个点不是孤立的
+            break
+        end
+    end
+    
+end
+lonelycenters=centers.*circle; %circle为0则不满足孤立且不可在图像边缘要求，为1则满足上述要求，让不满足要求的半径圆心数据归零
+lonelyradii=radii.*circle;
+lonelycenters(all(lonelycenters==0,2),:)=[];%去除为零的行，2指代行
+lonelyradii(all(lonelyradii==0,2),:)=[];%去除为零的行，2指代行
+viscircles(lonelycenters,lonelyradii,'Color','b'); %可视化孤立小球为蓝色
+clear i j circle centers radii gray_image;
+%% 判断孤立粒子是否在界面上 计算界面和粒子的切角
+halfangle_array=zeros(1, length(lonelyradii))'; %cos(halfangle)就是文献中的浸润系数，halfangle*2就是在黑相中的粒子边缘总弧度大小
+max_min=zeros(1, length(lonelyradii))';
+x1=zeros(1, length(lonelyradii))';y1=zeros(1, length(lonelyradii))';x2=zeros(1, length(lonelyradii))';y2=zeros(1, length(lonelyradii))';
+for i=1:length(lonelyradii)
+x_circle=lonelycenters(i,1); y_circle=lonelycenters(i,2); r=lonelyradii(i); R=coefficient*r; bangle=(1:100)'*2*pi/100;
+%position=[x_circle+R*cos(angle) y_circle+R*sin(angle)];
+onedimen_position=(round(x_circle+R*cos(bangle))-1)*size(w_pic,1)+round(y_circle+R*sin(bangle));
+bgray_circle=w_pic(onedimen_position);
+% plot(bangle, bgray_circle)
+% gray_circleclear=gray_image(onedimen_position); %这是没有进行平滑处理的数据 用于调试
+% figure;plot(angle, gray_circleclear)
+threeele = @(a,x) a(1)+a(2)*cos(x)+a(3)*sin(x)+a(4)*cos(2*x)+a(5)*sin(2*x)+a(6)*cos(3*x)+a(7)*sin(3*x)+a(8)*cos(4*x)+a(9)*sin(4*x)+a(10)*cos(5*x)+a(11)*sin(5*x)+a(12)*cos(6*x)+a(13)*sin(6*x);
+a0=ones(1,13);
+a = lsqcurvefit(threeele,a0,bangle,bgray_circle);
+% times = linspace(bangle(1),bangle(end));figure;plot(bangle,bgray_circle,'ko',times,threeele(a,times),'b-') %调试用
+% legend('Data','Fourier Fitting')
+% title('Data and Fitted Curve')  
+% fitfly=threeele(a,bangle);
+fit_data=threeele(a,bangle);
+max_min(i)=max(fit_data)-min(fit_data);
+difffit=diff(fit_data);
+[speedmax,max_positon]=max(difffit);
+[speedmin,min_positon]=min(difffit);
+
+result_angle=[max_positon/50*pi min_positon/50*pi];
+if min_positon<max_positon
+    pre_dark_angle=max_positon/50*pi-min_positon/50*pi;
+else
+    pre_dark_angle=max_positon/50*pi-min_positon/50*pi+2*pi;
+end
+%result_angle就是切角，在图中要标注出来
+syms x y
+eq1 = (y-R*sin(result_angle(1)))*(R*cos(result_angle(2))-R*cos(result_angle(1)))-(R*sin(result_angle(2))-R*sin(result_angle(1)))*(x-R*cos(result_angle(1)));
+eq2 = x^2 + y^2 -r^2;
+A = solve(eq1,eq2,x,y);
+x1(i)=x_circle+double(A.x(1));x2(i)=x_circle+double(A.x(2));y1(i)=y_circle+double(A.y(1));y2(i)=y_circle+double(A.y(2));
+
+if isreal(double(A.x)) && isreal(double(A.y)) %界面直线方程与圆方程联立有实数解
+    halfangle=0.5*acos(1-((double(A.x(1))-double(A.x(2)))^2+(double(A.y(1))-double(A.y(2)))^2)/2/r/r);%余弦定理
+    
+    if pre_dark_angle>pi
+        halfangle=pi-halfangle;  
+    end
+
+    halfangle_array(i)=halfangle;
+else
+    
+    continue
+end
+end
+halfangle_array=halfangle_array*180/pi;
+
+if_interface=0.5*mean(max_min)<max_min & 1.5*mean(max_min)>max_min;%是否max_min值比较正常，或者说粒子是否在界面上
+if_realsolve=halfangle_array~=0;%是否直线和圆周有实数解
+
+halfangle_array=halfangle_array.*if_realsolve.*if_interface; halfangle_array(halfangle_array==0)=[];
+x1=x1.*if_realsolve.*if_interface;x2=x2.*if_realsolve.*if_interface;y1=y1.*if_realsolve.*if_interface;y2=y2.*if_realsolve.*if_interface;
+x1(x1==0)=[];x2(x2==0)=[];y1(y1==0)=[];y2(y2==0)=[];
+lonelycenters=lonelycenters.*if_realsolve.*if_interface; lonelycenters(all(lonelycenters==0,2),:)=[];%去除为零的行，2指代行
+lonelyradii=lonelyradii.*if_realsolve.*if_interface; lonelyradii(lonelyradii==0)=[];
+viscircles(lonelycenters,lonelyradii,'Color','g'); %可视化孤立小球为green色
+
+hold on;  %光plot是不行的，必须要有这句，才能实现在 原图 标记点这一目标
+
+plot([x1,x2], [y1,y2],'X','Color','r','LineWidth',2);
+hold off;
+set (gca,'Position',[0 0 1 1]);                                      
+%print(gcf,'Test.jpg', '-djpeg', '-r300');
+
+
+saveas(gcf,'filename','tiff');
+mean(halfangle_array) %82.4514+_35.2419
+std(halfangle_array)
+
+%最后讲所有的contact_angle求平均，再求统计意义上的cos(contact_angle)值
+##### SOURCE END #####
+--></body></html>

@@ -1,0 +1,251 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>lixinghan1</title><meta name="generator" content="MATLAB 9.3"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-05-15"><meta name="DC.source" content="lixinghan1.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput"><span class="comment">%&#36755;&#20837;&#22270;&#29255;&#23384;&#25918;&#22312;a&#25991;&#20214;&#22841;&#20013; &#36755;&#20986;&#26102;&#38388;&#20809;&#24378;&#22270;&#20687;&#21644;&#26102;&#38388;&#30456;&#21306;&#23610;&#23544;&#26354;&#32447;</span>
+clc
+clear
+matrixT=[];n=[];
+fname=<span class="string">'a/bitmap'</span>;
+bname=<span class="string">'.jpg'</span>;
+A=[fname,<span class="string">'00020'</span>,bname];
+K = imread(A);                <span class="comment">% &#36755;&#20837;&#22270;&#20687;&#65307;</span>
+K = rgb2gray(K); <span class="comment">%&#21462;&#28784;&#24230;&#20540;&#65307;</span>
+a=0;
+iadd=0;
+jadd=0;
+<span class="keyword">for</span> j=334:434
+    <span class="keyword">for</span> i=238:338
+       <span class="keyword">if</span> K(i,j)&gt;200
+           iadd=iadd+i;
+           jadd=jadd+j;
+           a=a+1;
+       <span class="keyword">end</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+x=floor(iadd/a);
+y=floor(jadd/a);
+<span class="comment">%&#25214;&#21040;K&#20013;&#30340;&#20013;&#24515;&#28857;&#22352;&#26631;&#20026;&#65288;x,y&#65289;</span>
+clear <span class="string">a</span> <span class="string">i</span> <span class="string">j</span> <span class="string">jadd</span> <span class="string">iadd</span>;
+<span class="keyword">for</span> m=1:(length(dir(<span class="string">'a'</span>))-3)
+    <span class="comment">%m=2;%&#27979;&#35797;&#29992;</span>
+    weishu=floor(log10(m))+1;
+    weishu=5-weishu;
+    p=num2str(m);
+<span class="comment">%&#22312;&#36825;&#37324;&#21152;&#24490;&#29615;</span>
+<span class="keyword">for</span> o=1:weishu
+    p=[<span class="string">'0'</span>,p];
+<span class="keyword">end</span>
+A=[fname,p,bname];
+clear <span class="string">o</span> <span class="string">p</span> <span class="string">weishu</span>;
+K = imread(A);                <span class="comment">% &#36755;&#20837;&#22270;&#20687;&#65307;</span>
+K = rgb2gray(K); <span class="comment">%&#21462;&#28784;&#24230;&#20540;&#65307;</span>
+<span class="comment">%&#22312;&#36825;&#37324;&#21152;&#24490;&#29615;</span>
+<span class="comment">%%%%%%%%%%%%%%%%%</span>
+F=K(((x-200):(x+200)),((y-200):(y+200)));
+F=double(F);                     <span class="comment">%int8&#23475;&#27515;&#20154;</span>
+Intensity=zeros((length(F)+1)/2,1);
+a=Intensity;
+<span class="keyword">for</span> i=1:length(F)
+    <span class="keyword">for</span> j=1:length(F)
+      n=ceil( ( (i-(length(F)+1)/2)^2+(j-(length(F)+1)/2)^2 )^0.5 );
+      <span class="keyword">if</span> (n&gt;0)&amp;&amp;(n&lt;=(length(F)+1)/2)
+      Intensity(n)=Intensity(n)+F(i,j);
+      a(n)=a(n)+1;
+      <span class="keyword">end</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+          Intensity=Intensity./a;
+matrixT=[matrixT Intensity];
+<span class="keyword">end</span>
+matrixT=matrixT/255;
+pix=(1:(length(F)+1)/2)';
+clear <span class="string">a</span> <span class="string">A</span> <span class="string">bname</span> <span class="string">F</span> <span class="string">fname</span> <span class="string">i</span> <span class="string">Intensity</span> <span class="string">j</span> <span class="string">K</span> <span class="string">m</span> <span class="string">n</span> <span class="string">x</span> <span class="string">y</span>;
+<span class="comment">%save('a/matrixT','matrixT');</span>
+<span class="comment">%figure;</span>
+<span class="comment">%plot(pix,Intensity);</span>
+<span class="comment">%&#32771;&#34385;&#23558;&#21021;&#22987;&#20809;&#24378;&#25968;&#25454;&#25972;&#20307;&#21033;&#29992;&#20462;&#27491;&#30697;&#38453;&#20462;&#27491;&#22788;&#29702;&#65292;&#19978;&#36848;&#20195;&#30721;&#23558;&#22914;&#19979;&#25152;&#31034;&#65306;</span>
+b=matrixT;
+b=(abs(b-0.0833)).^1.5;  <span class="comment">%&#20285;&#39532;&#26657;&#27491;</span>
+b=b-b(:,5);  <span class="comment">%&#25187;&#38500;&#32972;&#26223;&#20809;&#24378;</span>
+shulie=pix';
+xiuzhengxishu=cos(atan(shulie*0.07/17.5)).^3;  <span class="comment">%&#38750;&#23567;&#35282;&#37096;&#20998;&#36827;&#34892;&#20809;&#24378;&#24230;&#20462;&#27491;</span>
+xiuzhengxishu=1./xiuzhengxishu;
+xiuzhengxishu=xiuzhengxishu';
+b=b.*xiuzhengxishu;
+b=b((24:201),:);  <span class="comment">%&#26368;&#20339;&#24773;&#20917;&#23601;&#26159;14 b=b((14:201),:);</span>
+[M,I] = max(b);
+I=I+23;   <span class="comment">%&#28040;&#38500;&#20013;&#24515;&#24378;&#20809;&#26001;&#24433;&#21709; &#26368;&#20339;&#24773;&#20917;&#23601;&#26159;13</span>
+time=1:size(matrixT,2);
+time=5*time';   <span class="comment">%&#26102;&#38388;&#20026;&#27599;30&#31186;&#25293;&#19968;&#24352;&#30340;&#26102;&#20505;&#29992;&#36825;&#20010;</span>
+I=I';
+M=M';
+jiao=atan(I*0.07/17.5);
+qm=4*3.1415926/632.8*1000*sin(jiao/2);
+L=2*3.141526./qm;
+figure
+subplot(1,2,1);
+loglog(time,M),title(<span class="string">'I'</span>);xlabel(<span class="string">'time(s)'</span>); ylabel(<span class="string">'Intensity'</span>);
+subplot(1,2,2);
+loglog(time,L),title(<span class="string">'L'</span>);xlabel(<span class="string">'time(s)'</span>); ylabel(<span class="string">'characteristic length'</span>);
+<span class="comment">%save('D:\Users\zhang haimo\Documents\MATLAB\mat\PMMAdaSAN ATRPxiao 180du 27h','time','L','M');</span>
+<span class="comment">%&#32467;&#26463;</span>
+</pre><img vspace="5" hspace="5" src="lixinghan1_01.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%输入图片存放在a文件夹中 输出时间光强图像和时间相区尺寸曲线
+clc
+clear
+matrixT=[];n=[];
+fname='a/bitmap';
+bname='.jpg';
+A=[fname,'00020',bname];
+K = imread(A);                % 输入图像；
+K = rgb2gray(K); %取灰度值；
+a=0;
+iadd=0;
+jadd=0;
+for j=334:434
+    for i=238:338
+       if K(i,j)>200
+           iadd=iadd+i;
+           jadd=jadd+j;
+           a=a+1;
+       end    
+    end
+end
+x=floor(iadd/a);
+y=floor(jadd/a);
+%找到K中的中心点坐标为（x,y）
+clear a i j jadd iadd;
+for m=1:(length(dir('a'))-3)
+    %m=2;%测试用
+    weishu=floor(log10(m))+1;
+    weishu=5-weishu;
+    p=num2str(m);
+%在这里加循环
+for o=1:weishu
+    p=['0',p];
+end
+A=[fname,p,bname];
+clear o p weishu;
+K = imread(A);                % 输入图像；
+K = rgb2gray(K); %取灰度值；
+%在这里加循环
+%%%%%%%%%%%%%%%%%
+F=K(((x-200):(x+200)),((y-200):(y+200)));
+F=double(F);                     %int8害死人
+Intensity=zeros((length(F)+1)/2,1);
+a=Intensity;
+for i=1:length(F)
+    for j=1:length(F)
+      n=ceil( ( (i-(length(F)+1)/2)^2+(j-(length(F)+1)/2)^2 )^0.5 );
+      if (n>0)&&(n<=(length(F)+1)/2) 
+      Intensity(n)=Intensity(n)+F(i,j);
+      a(n)=a(n)+1;
+      end
+    end
+end
+          Intensity=Intensity./a;
+matrixT=[matrixT Intensity];
+end
+matrixT=matrixT/255;
+pix=(1:(length(F)+1)/2)';
+clear a A bname F fname i Intensity j K m n x y;
+%save('a/matrixT','matrixT');
+%figure;
+%plot(pix,Intensity);
+%考虑将初始光强数据整体利用修正矩阵修正处理，上述代码将如下所示：
+b=matrixT;
+b=(abs(b-0.0833)).^1.5;  %伽马校正
+b=b-b(:,5);  %扣除背景光强
+shulie=pix';
+xiuzhengxishu=cos(atan(shulie*0.07/17.5)).^3;  %非小角部分进行光强度修正
+xiuzhengxishu=1./xiuzhengxishu;
+xiuzhengxishu=xiuzhengxishu';
+b=b.*xiuzhengxishu;
+b=b((24:201),:);  %最佳情况就是14 b=b((14:201),:);
+[M,I] = max(b);
+I=I+23;   %消除中心强光斑影响 最佳情况就是13
+time=1:size(matrixT,2);
+time=5*time';   %时间为每30秒拍一张的时候用这个
+I=I';
+M=M';
+jiao=atan(I*0.07/17.5);
+qm=4*3.1415926/632.8*1000*sin(jiao/2);
+L=2*3.141526./qm;
+figure
+subplot(1,2,1);
+loglog(time,M),title('I');xlabel('time(s)'); ylabel('Intensity');
+subplot(1,2,2);
+loglog(time,L),title('L');xlabel('time(s)'); ylabel('characteristic length');
+%save('D:\Users\zhang haimo\Documents\MATLAB\mat\PMMAdaSAN ATRPxiao 180du 27h','time','L','M');
+%结束
+  
+   
+
+##### SOURCE END #####
+--></body></html>

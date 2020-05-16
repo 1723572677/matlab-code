@@ -1,0 +1,146 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>loglogloglog</title><meta name="generator" content="MATLAB 9.3"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-05-15"><meta name="DC.source" content="loglogloglog.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput"><span class="keyword">function</span> [ttotle,Ltotle]=loglogloglog(k,a,b,Lc,n)
+<span class="comment">%&#26381;&#21153;&#20110;myfun.m</span>
+<span class="comment">%x1,y1&#26159;&#35813;&#26354;&#32447;&#19978;&#31532;&#19968;&#20010;&#20020;&#30028;&#20540;&#28857;&#30340;&#22352;&#26631;</span>
+x=[];
+y=[];
+xinterval=1;<span class="comment">%&#21462;&#28857;&#38388;&#38548;</span>
+
+    <span class="keyword">function</span> dydx = f(a,b,y,Lc,k,n)
+        <span class="comment">%UNTITLED &#27492;&#22788;&#26174;&#31034;&#26377;&#20851;&#27492;&#20989;&#25968;&#30340;&#25688;&#35201;</span>
+        <span class="comment">%   &#27492;&#22788;&#26174;&#31034;&#35814;&#32454;&#35828;&#26126;</span>
+        dydx=a.*k.^(1./a).*y.^(1-1./a).*(1-b*(y-Lc).^n);
+    <span class="keyword">end</span>
+x1=(Lc/k)^(1/a);
+x1=ceil(x1);
+x=[x1:xinterval:200000]; <span class="comment">%&#65281;&#65281;&#65281;&#25913;&#25104;300000</span>
+y(1)=Lc;
+
+<span class="keyword">for</span> i=1:( (x(end)-x1) /xinterval)
+    y(i+1)=y(i)+f(a,b,y(i),Lc,k,n).*xinterval;
+<span class="keyword">end</span>
+
+<span class="comment">%&#19978;&#26041;&#26159;Lc&#20043;&#21518;&#30340;&#25311;&#21512;&#26354;&#32447;&#65292;&#21518;&#38754;&#35201;&#20889;&#30340;&#26159;Lc&#21069;&#38754;&#30340;&#25311;&#21512;&#26354;&#32447;</span>
+xbefore=[];
+ybefore=[];
+xbefore=[ceil((0.2/k)^(1/a)):1:(x1-1)];<span class="comment">%&#65281;&#65281;&#65281;0.8&#26159;&#27979;&#37327;&#19979;&#38480;</span>
+ybefore=k*xbefore.^a;
+xbefore=xbefore';
+ybefore=ybefore';
+x=x';
+y=y';
+ttotle=[xbefore;x];
+Ltotle=[ybefore;y];
+<span class="comment">% figure</span>
+<span class="comment">% loglog(x,y,xbefore,ybefore);</span>
+<span class="keyword">end</span>
+</pre><pre class="codeoutput error">&#36755;&#20837;&#21442;&#25968;&#30340;&#25968;&#30446;&#19981;&#36275;&#12290;
+
+&#20986;&#38169; loglogloglog (line 13)
+x1=(Lc/k)^(1/a);
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+function [ttotle,Ltotle]=loglogloglog(k,a,b,Lc,n)
+%服务于myfun.m
+%x1,y1是该曲线上第一个临界值点的坐标
+x=[];
+y=[];
+xinterval=1;%取点间隔
+
+    function dydx = f(a,b,y,Lc,k,n)
+        %UNTITLED 此处显示有关此函数的摘要
+        %   此处显示详细说明
+        dydx=a.*k.^(1./a).*y.^(1-1./a).*(1-b*(y-Lc).^n);
+    end
+x1=(Lc/k)^(1/a);
+x1=ceil(x1);
+x=[x1:xinterval:200000]; %！！！改成300000
+y(1)=Lc;
+
+for i=1:( (x(end)-x1) /xinterval)
+    y(i+1)=y(i)+f(a,b,y(i),Lc,k,n).*xinterval;
+end
+
+%上方是Lc之后的拟合曲线，后面要写的是Lc前面的拟合曲线
+xbefore=[];
+ybefore=[];
+xbefore=[ceil((0.2/k)^(1/a)):1:(x1-1)];%！！！0.8是测量下限
+ybefore=k*xbefore.^a;
+xbefore=xbefore';
+ybefore=ybefore';
+x=x';
+y=y';
+ttotle=[xbefore;x];
+Ltotle=[ybefore;y];
+% figure
+% loglog(x,y,xbefore,ybefore);
+end
+##### SOURCE END #####
+--></body></html>

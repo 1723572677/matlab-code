@@ -1,0 +1,158 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>FFT</title><meta name="generator" content="MATLAB 9.3"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-05-15"><meta name="DC.source" content="FFT.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput"><span class="comment">%FFT 10000&#20493;&#29575;&#22270;&#29255;&#36716;&#25104;&#30340;Kx&#65288;&#25110;&#32773;F&#65289;&#23610;&#23544;&#20026;129*2/26.6=9.699&#24494;&#31859;&#65292;&#21017;L&#65288;t&#65289;=9.7&#24494;&#31859;/ &#65288;pix with Max value intensity&#65289;</span>
+<span class="comment">%40000&#20493;&#29575;&#20026;&#19978;&#36848;L&#65288;t&#65289;&#35745;&#31639;&#20540;&#38500;&#20197;4</span>
+<span class="comment">%&#30456;&#24046;&#26174;&#24494;&#38236; 559&#20687;&#32032;&#28857;&#20026;50&#24494;&#31859; &#21017;1281&#20010;&#20687;&#32032;&#28857;&#20026;114.58&#24494;&#31859;&#65292;L(t)=114.58&#24494;&#31859;/ (pix with Max value intensity)</span>
+clc
+clear
+A=<span class="string">'old2.5h.jpg'</span>;
+K = imread(A);                <span class="comment">% &#36755;&#20837;&#22270;&#20687;&#65307;</span>
+K = rgb2gray(K);                    <span class="comment">%&#21462;&#28784;&#24230;&#20540;&#65307;</span>
+figure;
+imshow(K,[]);title(<span class="string">'original pic'</span>,<span class="string">'color'</span>,<span class="string">'r'</span>,<span class="string">'FontSize'</span>,16)
+
+
+Kx=K(1:4:1281,1:4:1281);     <span class="comment">% &#23558;&#22270;&#20687;&#36136;&#37327;&#21464;&#24046;&#65307;</span>
+F=fft2(Kx);                         <span class="comment">%       fft2&#65307;</span>
+F=fftshift(F);                       <span class="comment">%      fftshift&#65307;</span>
+F=abs(F);                            <span class="comment">%     &#23558;&#22797;&#25968;&#36716;&#21270;&#20026;&#23454;&#25968;&#65307;</span>
+T=log(F+1);                         <span class="comment">%     &#21462;&#23545;&#25968;&#65307;</span>
+figure;
+imshow(T,[]); title(<span class="string">'FFT'</span>,<span class="string">'color'</span>,<span class="string">'r'</span>,<span class="string">'FontSize'</span>,16)
+ <span class="comment">%        &#33258;&#21160;&#35843;&#25972;&#28784;&#24230;&#23545;&#27604;&#24230;&#65292;&#36755;&#20986;&#29615;&#65307;</span>
+B=[<span class="string">'D:\Users\zhang haimo\Documents\MATLAB\FFT\FFT'</span>,A];  <span class="comment">%&#23383;&#31526;&#20018;&#21069;&#32512;FFT</span>
+saveas(gcf,B)   <span class="comment">%&#20445;&#23384;FFT&#22270;&#20687;</span>
+
+Intensity=zeros((length(F)-1)/2,1);
+<span class="keyword">for</span> n=1:(length(F)-1)/2
+     a=0;
+    <span class="keyword">for</span> i=1:length(F)           <span class="comment">%&#36825;&#37324;&#27880;&#24847;length(T)&#24517;&#39035;&#26159;&#22855;&#25968;</span>
+       <span class="keyword">for</span> j=1:length(F)
+          <span class="keyword">if</span> ((n-1)&lt;=( ( (i-(length(F)+1)/2)^2+(j-(length(F)+1)/2)^2 )^0.5 ) )&amp;&amp;( ( ( (i-(length(F)+1)/2)^2+(j-(length(F)+1)/2)^2 )^0.5 ))&lt;n
+           Intensity(n)= Intensity(n)+T(i,j);
+           a=a+1;
+          <span class="keyword">end</span>
+       <span class="keyword">end</span>
+    <span class="keyword">end</span>
+     <span class="keyword">if</span> a~=0
+          Intensity(n)=Intensity(n)/a;
+     <span class="keyword">end</span>
+<span class="keyword">end</span>
+pix=(1:(length(F)-1)/2)';
+
+figure;
+plot(pix,Intensity);title(<span class="string">'2-D of FFT'</span>,<span class="string">'color'</span>,<span class="string">'r'</span>,<span class="string">'FontSize'</span>,16)
+</pre><pre class="codeoutput">&#35686;&#21578;: &#22270;&#20687;&#22826;&#22823;&#65292;&#26080;&#27861;&#22312;&#23631;&#24149;&#19978;&#26174;&#31034;&#65307;&#23558;&#20197; 50% &#26174;&#31034; 
+</pre><img vspace="5" hspace="5" src="FFT_01.png" alt=""> <img vspace="5" hspace="5" src="FFT_02.png" alt=""> <img vspace="5" hspace="5" src="FFT_03.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%FFT 10000倍率图片转成的Kx（或者F）尺寸为129*2/26.6=9.699微米，则L（t）=9.7微米/ （pix with Max value intensity）
+%40000倍率为上述L（t）计算值除以4
+%相差显微镜 559像素点为50微米 则1281个像素点为114.58微米，L(t)=114.58微米/ (pix with Max value intensity)
+clc
+clear
+A='old2.5h.jpg';
+K = imread(A);                % 输入图像；
+K = rgb2gray(K);                    %取灰度值；
+figure;
+imshow(K,[]);title('original pic','color','r','FontSize',16)
+
+
+Kx=K(1:4:1281,1:4:1281);     % 将图像质量变差；
+F=fft2(Kx);                         %       fft2；
+F=fftshift(F);                       %      fftshift；
+F=abs(F);                            %     将复数转化为实数；
+T=log(F+1);                         %     取对数；
+figure;
+imshow(T,[]); title('FFT','color','r','FontSize',16)     
+ %        自动调整灰度对比度，输出环；
+B=['D:\Users\zhang haimo\Documents\MATLAB\FFT\FFT',A];  %字符串前缀FFT
+saveas(gcf,B)   %保存FFT图像
+
+Intensity=zeros((length(F)-1)/2,1);
+for n=1:(length(F)-1)/2
+     a=0;
+    for i=1:length(F)           %这里注意length(T)必须是奇数
+       for j=1:length(F)     
+          if ((n-1)<=( ( (i-(length(F)+1)/2)^2+(j-(length(F)+1)/2)^2 )^0.5 ) )&&( ( ( (i-(length(F)+1)/2)^2+(j-(length(F)+1)/2)^2 )^0.5 ))<n
+           Intensity(n)= Intensity(n)+T(i,j);
+           a=a+1;
+          end
+       end
+    end
+     if a~=0
+          Intensity(n)=Intensity(n)/a;
+     end
+end
+pix=(1:(length(F)-1)/2)';
+
+figure;
+plot(pix,Intensity);title('2-D of FFT','color','r','FontSize',16)
+
+##### SOURCE END #####
+--></body></html>

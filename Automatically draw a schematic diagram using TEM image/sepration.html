@@ -1,0 +1,396 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>sepration</title><meta name="generator" content="MATLAB 9.3"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-05-15"><meta name="DC.source" content="sepration.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput">I=imread(<span class="string">'TEM.tif'</span>); figure;imshow(I)
+title(<span class="string">'original pic'</span>,<span class="string">'color'</span>,<span class="string">'r'</span>,<span class="string">'FontSize'</span>,16)
+BG=imopen(I,strel(<span class="string">'disk'</span>,15));
+level=graythresh(BG);
+bw=im2bw(BG,level);
+<span class="comment">% subplot(1,2,1);</span>
+<span class="comment">% imshow(bw);</span>
+kernel = 80;
+bw= medfilt2(bw,[kernel ,kernel ]);
+<span class="comment">% subplot(1,2,2);</span>
+<span class="comment">% imshow(bw);%bw&#33267;&#27492;&#24050;&#32463;&#24179;&#28369;&#36215;&#26469;&#20102;&#65292;&#20026;&#20108;&#20540;&#22270;</span>
+a=[];a0=0;
+[r,c] = size(bw);<span class="comment">%&#36716;&#25104;&#30333;&#32418;&#22270;</span>
+image = ones(r,c,3);
+<span class="keyword">for</span> i = 1:r
+    <span class="keyword">for</span> j = 1:c
+        <span class="keyword">if</span> bw(i,j) == 0
+            image(i,j,1) = 255;
+            image(i,j,2) = 0;
+            image(i,j,3) = 0;
+        <span class="keyword">end</span>
+         <span class="keyword">if</span> bw(i,j) == 1
+            image(i,j,1) = 0;
+            image(i,j,2) = 0;
+            image(i,j,3) = 0;
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+figure
+imshow(image);
+
+lunkuo=zeros(r,c);<span class="comment">%&#25552;&#21462;&#36718;&#24275;&#22352;&#26631;</span>
+<span class="keyword">for</span> i = 1:r
+    <span class="keyword">for</span> j = 1:(c-1)
+        <span class="keyword">if</span> (bw(i,j)+bw(i,j+1))==1
+            lunkuo(i,j) = 255;
+            a0=a0+1;
+            a(a0,1)=i;
+            a(a0,2)=j;
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="keyword">for</span> j = 1:c
+    <span class="keyword">for</span> i = 1:(r-1)
+        <span class="keyword">if</span> (bw(i,j)+bw(i+1,j))==1
+            lunkuo(i,j) = 255;
+              a0=a0+1;
+            a(a0,1)=i;
+            a(a0,2)=j;
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+imshow(lunkuo); <span class="comment">%&#25552;&#21462;&#36718;&#24275;&#22352;&#26631;&#23436;&#25104;</span>
+
+luokuo1=lunkuo;  <span class="comment">%&#23558;&#31890;&#23376;&#20998;&#24067;&#22312;&#30028;&#38754;&#19978;&#65292;&#20854;&#23454;&#26159;&#22312;&#36718;&#24275;&#19978;</span>
+imshow(luokuo1);
+<span class="keyword">for</span> j=1:500
+
+ x=floor(24181*rand)+1;
+ m1=a(x,1);
+ n1=a(x,2);
+ <span class="keyword">if</span> luokuo1(m1,n1)==254
+     <span class="keyword">continue</span>
+ <span class="keyword">end</span>
+
+
+
+<span class="keyword">for</span> i=1:300
+w=0;
+<span class="keyword">for</span> m= max(1,(m1-32)):min(1608,(m1+32))
+    <span class="keyword">for</span> n=max(1,(n1-32)):min(1852,(n1+32))
+        <span class="keyword">if</span> ( (m-m1)^2+(n-n1)^2 ) &lt; 256
+            luokuo1(m,n)=254;
+        <span class="keyword">end</span>
+        <span class="keyword">if</span> w==0
+             <span class="keyword">if</span>   floor(  ( (m-m1)^2+(n-n1)^2 )^0.5 /2 )== 15 &amp;&amp; lunkuo(m,n)==255
+                 <span class="keyword">if</span> luokuo1(m,n)~=254
+
+                         w=w+1;
+                        m0=m;
+                         n0=n;
+                 <span class="keyword">end</span>
+             <span class="keyword">end</span>
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+m1=m0;
+n1=n0;
+
+<span class="keyword">end</span>
+
+<span class="keyword">end</span>
+<span class="comment">% figure</span>
+<span class="comment">% imshow(luokuo1); %&#23436;&#25104;&#23558;&#31890;&#23376;&#20998;&#24067;&#22312;&#30028;&#38754;&#19978;&#65292;&#20854;&#23454;&#26159;&#22312;&#36718;&#24275;&#19978;</span>
+
+<span class="comment">% imshow(luokuo1);%&#23436;&#25104;&#23558;&#31890;&#23376;&#20998;&#24067;&#22312;&#30028;&#38754;&#19978;</span>
+diejia=luokuo1+image;
+imshow(diejia);<span class="comment">%&#23436;&#25104;&#23558;&#31890;&#23376;&#20998;&#24067;&#22312;&#30028;&#38754;&#19978;</span>
+
+A=diejia;
+imshow(A);<span class="comment">%&#23436;&#25104;&#23558;&#31890;&#23376;&#20998;&#24067;&#22312;&#30028;&#38754;&#19978;</span>
+title(<span class="string">'draw circles at the interface'</span>,<span class="string">'color'</span>,<span class="string">'r'</span>,<span class="string">'FontSize'</span>,16)
+imwrite(A,<span class="string">'interface.bmp'</span>,<span class="string">'bmp'</span>);
+C=A(400:600,1200:1400,:);
+figure
+imshow(C);
+title(<span class="string">'mini of draw circles at the interface'</span>,<span class="string">'color'</span>,<span class="string">'r'</span>,<span class="string">'FontSize'</span>,16)
+imwrite(C,<span class="string">'littleinterface.bmp'</span>,<span class="string">'bmp'</span>);
+
+<span class="comment">%&#23558;&#31890;&#23376;&#20998;&#24067;&#22312;&#22522;&#20307;&#20013;</span>
+luokuo2=zeros(r,c);
+luokuo3=zeros(r,c);
+<span class="keyword">for</span> i=1:1400
+x=floor(1608*rand)+1;
+y=floor(1852*rand)+1;
+ <span class="keyword">if</span> luokuo3(x,y)==254
+     <span class="keyword">continue</span> <span class="comment">%&#32456;&#27490;&#26412;&#27425;&#24490;&#29615;&#30340;&#25191;&#34892;&#65292;&#21363;&#36339;&#36807;&#24403;&#21069;&#36825;&#27425;&#24490;&#29615;&#20013;continue&#35821;&#21477;&#21518;&#23578;&#26410;&#25191;&#34892;&#30340;&#35821;&#21477;&#65292;&#25509;&#30528;&#36827;&#34892;&#19979;&#19968;&#27425;&#24490;&#29615;&#26465;&#20214;&#30340;&#21028;&#26029;&#12290;</span>
+ <span class="keyword">end</span>
+
+w=0;
+<span class="keyword">for</span> m= max(1,(x-16)):min(1608,(x+16))
+    <span class="keyword">for</span> n=max(1,(y-16)):min(1852,(y+16))
+        <span class="keyword">if</span>  bw(m,n)~= 0
+            w=1;
+            <span class="keyword">continue</span>
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="keyword">if</span> w==0
+   <span class="keyword">for</span> m= max(1,(x-32)):min(1608,(x+32))
+       <span class="keyword">for</span> n=max(1,(y-32)):min(1852,(y+32))
+          <span class="keyword">if</span>  ( (m-x)^2+(n-y)^2 ) &lt; 256
+             luokuo2(m,n)=254;
+          <span class="keyword">end</span>
+          <span class="keyword">if</span>  ( (m-x)^2+(n-y)^2 ) &lt; 1024
+             luokuo3(m,n)=254;
+          <span class="keyword">end</span>
+       <span class="keyword">end</span>
+
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="keyword">end</span>
+
+diejia2=luokuo2+image;
+figure
+imshow(diejia2);<span class="comment">%&#23436;&#25104;&#23558;&#31890;&#23376;&#20998;&#24067;&#22312;&#30028;&#38754;&#19978;</span>
+
+A1=diejia2;
+imshow(A1);<span class="comment">%&#23436;&#25104;&#23558;&#31890;&#23376;&#20998;&#24067;&#22312;&#30028;&#38754;&#19978;</span>
+title(<span class="string">'draw circles in one phase'</span>,<span class="string">'color'</span>,<span class="string">'r'</span>,<span class="string">'FontSize'</span>,16)
+imwrite(A1,<span class="string">'matrix.bmp'</span>,<span class="string">'bmp'</span>);
+C1=A1(400:600,1200:1400,:);
+figure
+imshow(C1);
+title(<span class="string">'mini of draw circles in one phase'</span>,<span class="string">'color'</span>,<span class="string">'r'</span>,<span class="string">'FontSize'</span>,16)
+imwrite(C1,<span class="string">'littlematrix.bmp'</span>,<span class="string">'bmp'</span>);
+</pre><pre class="codeoutput">&#35686;&#21578;: &#22270;&#20687;&#22826;&#22823;&#65292;&#26080;&#27861;&#22312;&#23631;&#24149;&#19978;&#26174;&#31034;&#65307;&#23558;&#20197; 50% &#26174;&#31034; 
+&#35686;&#21578;: &#22270;&#20687;&#22826;&#22823;&#65292;&#26080;&#27861;&#22312;&#23631;&#24149;&#19978;&#26174;&#31034;&#65307;&#23558;&#20197; 50% &#26174;&#31034; 
+&#35686;&#21578;: &#22270;&#20687;&#22826;&#22823;&#65292;&#26080;&#27861;&#22312;&#23631;&#24149;&#19978;&#26174;&#31034;&#65307;&#23558;&#20197; 50% &#26174;&#31034; 
+&#35686;&#21578;: &#22270;&#20687;&#22826;&#22823;&#65292;&#26080;&#27861;&#22312;&#23631;&#24149;&#19978;&#26174;&#31034;&#65307;&#23558;&#20197; 50% &#26174;&#31034; 
+&#35686;&#21578;: &#22270;&#20687;&#22826;&#22823;&#65292;&#26080;&#27861;&#22312;&#23631;&#24149;&#19978;&#26174;&#31034;&#65307;&#23558;&#20197; 50% &#26174;&#31034; 
+&#35686;&#21578;: &#22270;&#20687;&#22826;&#22823;&#65292;&#26080;&#27861;&#22312;&#23631;&#24149;&#19978;&#26174;&#31034;&#65307;&#23558;&#20197; 50% &#26174;&#31034; 
+&#35686;&#21578;: &#22270;&#20687;&#22826;&#22823;&#65292;&#26080;&#27861;&#22312;&#23631;&#24149;&#19978;&#26174;&#31034;&#65307;&#23558;&#20197; 50% &#26174;&#31034; 
+&#35686;&#21578;: &#22270;&#20687;&#22826;&#22823;&#65292;&#26080;&#27861;&#22312;&#23631;&#24149;&#19978;&#26174;&#31034;&#65307;&#23558;&#20197; 50% &#26174;&#31034; 
+</pre><img vspace="5" hspace="5" src="sepration_01.png" alt=""> <img vspace="5" hspace="5" src="sepration_02.png" alt=""> <img vspace="5" hspace="5" src="sepration_03.png" alt=""> <img vspace="5" hspace="5" src="sepration_04.png" alt=""> <img vspace="5" hspace="5" src="sepration_05.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+I=imread('TEM.tif'); figure;imshow(I)
+title('original pic','color','r','FontSize',16)   
+BG=imopen(I,strel('disk',15));
+level=graythresh(BG);
+bw=im2bw(BG,level);
+% subplot(1,2,1);
+% imshow(bw);
+kernel = 80;
+bw= medfilt2(bw,[kernel ,kernel ]);
+% subplot(1,2,2);
+% imshow(bw);%bw至此已经平滑起来了，为二值图
+a=[];a0=0;
+[r,c] = size(bw);%转成白红图
+image = ones(r,c,3);
+for i = 1:r
+    for j = 1:c
+        if bw(i,j) == 0
+            image(i,j,1) = 255;
+            image(i,j,2) = 0;
+            image(i,j,3) = 0;
+        end
+         if bw(i,j) == 1
+            image(i,j,1) = 0;
+            image(i,j,2) = 0;
+            image(i,j,3) = 0;
+        end
+    end
+end
+figure
+imshow(image);
+
+lunkuo=zeros(r,c);%提取轮廓坐标
+for i = 1:r
+    for j = 1:(c-1)
+        if (bw(i,j)+bw(i,j+1))==1
+            lunkuo(i,j) = 255;
+            a0=a0+1;
+            a(a0,1)=i;
+            a(a0,2)=j;
+        end
+    end
+end
+for j = 1:c
+    for i = 1:(r-1)
+        if (bw(i,j)+bw(i+1,j))==1
+            lunkuo(i,j) = 255;
+              a0=a0+1;
+            a(a0,1)=i;
+            a(a0,2)=j;
+        end
+    end
+end
+imshow(lunkuo); %提取轮廓坐标完成
+
+luokuo1=lunkuo;  %将粒子分布在界面上，其实是在轮廓上
+imshow(luokuo1);
+for j=1:500
+    
+ x=floor(24181*rand)+1; 
+ m1=a(x,1);
+ n1=a(x,2);  
+ if luokuo1(m1,n1)==254
+     continue
+ end
+ 
+
+
+for i=1:300
+w=0;
+for m= max(1,(m1-32)):min(1608,(m1+32))
+    for n=max(1,(n1-32)):min(1852,(n1+32))
+        if ( (m-m1)^2+(n-n1)^2 ) < 256
+            luokuo1(m,n)=254;
+        end
+        if w==0 
+             if   floor(  ( (m-m1)^2+(n-n1)^2 )^0.5 /2 )== 15 && lunkuo(m,n)==255
+                 if luokuo1(m,n)~=254
+                    
+                         w=w+1;
+                        m0=m;
+                         n0=n;
+                 end
+             end
+        end
+    end
+end
+
+m1=m0;
+n1=n0;
+
+end
+
+end
+% figure
+% imshow(luokuo1); %完成将粒子分布在界面上，其实是在轮廓上
+
+% imshow(luokuo1);%完成将粒子分布在界面上
+diejia=luokuo1+image;
+imshow(diejia);%完成将粒子分布在界面上
+
+A=diejia;
+imshow(A);%完成将粒子分布在界面上
+title('draw circles at the interface','color','r','FontSize',16)  
+imwrite(A,'interface.bmp','bmp');
+C=A(400:600,1200:1400,:);
+figure
+imshow(C);
+title('mini of draw circles at the interface','color','r','FontSize',16) 
+imwrite(C,'littleinterface.bmp','bmp');
+
+%将粒子分布在基体中
+luokuo2=zeros(r,c);
+luokuo3=zeros(r,c);
+for i=1:1400
+x=floor(1608*rand)+1; 
+y=floor(1852*rand)+1; 
+ if luokuo3(x,y)==254
+     continue %终止本次循环的执行，即跳过当前这次循环中continue语句后尚未执行的语句，接着进行下一次循环条件的判断。
+ end
+
+w=0;
+for m= max(1,(x-16)):min(1608,(x+16))
+    for n=max(1,(y-16)):min(1852,(y+16))
+        if  bw(m,n)~= 0
+            w=1;
+            continue
+        end
+    end
+end
+
+if w==0
+   for m= max(1,(x-32)):min(1608,(x+32))
+       for n=max(1,(y-32)):min(1852,(y+32))
+          if  ( (m-x)^2+(n-y)^2 ) < 256 
+             luokuo2(m,n)=254;
+          end
+          if  ( (m-x)^2+(n-y)^2 ) < 1024 
+             luokuo3(m,n)=254;
+          end
+       end
+    
+    end
+end
+end
+
+diejia2=luokuo2+image;
+figure
+imshow(diejia2);%完成将粒子分布在界面上
+
+A1=diejia2;
+imshow(A1);%完成将粒子分布在界面上
+title('draw circles in one phase','color','r','FontSize',16)  
+imwrite(A1,'matrix.bmp','bmp');
+C1=A1(400:600,1200:1400,:);
+figure
+imshow(C1);
+title('mini of draw circles in one phase','color','r','FontSize',16)  
+imwrite(C1,'littlematrix.bmp','bmp');
+##### SOURCE END #####
+--></body></html>

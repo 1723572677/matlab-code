@@ -1,0 +1,168 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>jamming3d</title><meta name="generator" content="MATLAB 9.3"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-05-16"><meta name="DC.source" content="jamming3d.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput">clc
+clear
+
+[X,Y] = meshgrid(-60000:5000:60000);<span class="comment">%&#22823;&#38754;&#31215;&#29992;-60000:5000:60000&#65292;&#23567;&#38754;&#31215;&#29992;-20000:5000:20000</span>
+Z = X.^2-2*Y.^2;
+Z=Z/160000;
+
+x0=[];y0=[];z0=[];
+px=[];py=[];pz=[];
+
+<span class="comment">% &#35774;&#32622;&#26080;&#38480;&#36828;&#24179;&#34892;&#20809;&#28304;&#20809;&#29031;&#25928;&#26524;</span>
+figure
+surf(X,Y,Z);
+light(<span class="string">'Style'</span>,<span class="string">'infinit'</span>,<span class="string">'Position'</span>,[0 -0.6 1]);
+axis <span class="string">equal</span>;
+<span class="comment">%&#20197;&#19978;&#26159;&#32472;&#21046;&#26354;&#38754;</span>
+
+[x,y,z] = sphere;
+CO(:,:,1) = zeros(21); <span class="comment">% red</span>
+CO(:,:,2) = ones(21); <span class="comment">% green</span>
+CO(:,:,3) = ones(21); <span class="comment">% blue</span>
+
+hold <span class="string">on</span>
+<span class="keyword">for</span> i=1:20000
+    x0(i)=-60000+120000*rand; <span class="comment">%&#22823;&#38754;&#31215;&#29992;-60000+120000*rand;&#65292;&#23567;&#38754;&#31215;&#29992;-55000+110000*rand</span>
+    y0(i)=-60000+120000*rand;
+    z0(i)= (x0(i).^2-2*y0(i).^2)/160000;
+    overlap=0;
+      <span class="keyword">for</span> j=1:length(px)
+        <span class="keyword">if</span> ((px(j)-x0(i))^2+(py(j)-y0(i))^2+(pz(j)-z0(i))^2)&lt;80000000 <span class="comment">%&#20026;&#20102;&#21487;&#20197;jamming&#36825;&#37324;&#20570;&#20102;&#20462;&#25913;&#65292;&#35753;&#31890;&#23376;&#21487;&#20197;&#37325;&#21472;&#19968;&#37096;&#20998;</span>
+          overlap=1;
+        <span class="keyword">end</span>
+      <span class="keyword">end</span>
+    <span class="keyword">if</span> overlap==0
+       surf(5000*x+x0(i),5000*y+y0(i),5000*z+z0(i),CO);<span class="comment">% sphere centered at (x0(i),y0(i),z0(i))</span>
+       px=[px x0(i)];py=[py y0(i)];pz=[pz z0(i)];
+
+    <span class="keyword">end</span>
+    <span class="keyword">if</span> length(px)==200 <span class="comment">%&#35843;&#33410;&#23494;&#38598;&#31243;&#24230;</span>
+        <span class="keyword">break</span> <span class="comment">%.&#32467;&#26463;&#24403;&#21069;&#25972;&#20010;&#24490;&#29615;&#65292;&#25191;&#34892;&#24403;&#21069;&#24490;&#29615;&#19979;&#36793;&#30340;&#35821;&#21477;&#12290;&#24573;&#30053;&#24490;&#29615;&#20307;&#20013;&#20219;&#20309;&#20854;&#23427;&#35821;&#21477;&#21644;&#24490;&#29615;&#26465;&#20214;&#27979;&#35797;&#12290;</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+shading <span class="string">interp</span> <span class="comment">%&#21435;&#38500;&#32593;&#26684;&#32447;</span>
+
+axis <span class="string">off</span>
+hold <span class="string">off</span>
+view([-45,40])
+</pre><img vspace="5" hspace="5" src="jamming3d_01.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+clc
+clear
+
+[X,Y] = meshgrid(-60000:5000:60000);%大面积用-60000:5000:60000，小面积用-20000:5000:20000
+Z = X.^2-2*Y.^2;
+Z=Z/160000;
+
+x0=[];y0=[];z0=[];
+px=[];py=[];pz=[];
+
+% 设置无限远平行光源光照效果
+figure
+surf(X,Y,Z);
+light('Style','infinit','Position',[0 -0.6 1]);
+axis equal;
+%以上是绘制曲面
+
+[x,y,z] = sphere;
+CO(:,:,1) = zeros(21); % red
+CO(:,:,2) = ones(21); % green
+CO(:,:,3) = ones(21); % blue
+
+hold on
+for i=1:20000
+    x0(i)=-60000+120000*rand; %大面积用-60000+120000*rand;，小面积用-55000+110000*rand
+    y0(i)=-60000+120000*rand;
+    z0(i)= (x0(i).^2-2*y0(i).^2)/160000;
+    overlap=0;
+      for j=1:length(px)
+        if ((px(j)-x0(i))^2+(py(j)-y0(i))^2+(pz(j)-z0(i))^2)<80000000 %为了可以jamming这里做了修改，让粒子可以重叠一部分
+          overlap=1;
+        end
+      end
+    if overlap==0
+       surf(5000*x+x0(i),5000*y+y0(i),5000*z+z0(i),CO);% sphere centered at (x0(i),y0(i),z0(i))
+       px=[px x0(i)];py=[py y0(i)];pz=[pz z0(i)];
+    
+    end
+    if length(px)==200 %调节密集程度
+        break %.结束当前整个循环，执行当前循环下边的语句。忽略循环体中任何其它语句和循环条件测试。
+    end
+end
+shading interp %去除网格线
+
+axis off
+hold off
+view([-45,40])
+
+
+##### SOURCE END #####
+--></body></html>
